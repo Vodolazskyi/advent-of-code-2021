@@ -36,7 +36,7 @@ class Board:
         {4, 9, 14, 19, 24},
     )
 
-    def __init__(self, rows: List[int]) -> None:
+    def __init__(self, rows: List[List[int]]) -> None:
         self.rows = rows
         self.marked_indices = set()
         self.sum = sum(sum(row) for row in self.rows)
