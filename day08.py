@@ -1,5 +1,4 @@
 from typing import List
-from collections import defaultdict
 
 
 RAW = """be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
@@ -26,8 +25,8 @@ assert sum(count_unique_digits(line) for line in INPUT) == 26
 
 class Decoder:
     def __init__(self, digits: List[str]) -> None:
-        self.dict_str = defaultdict(int)
-        self.dict_int = defaultdict(str)
+        self.dict_str = {}
+        self.dict_int = {}
         for digit in digits:
             match len(digit):
                 case 2:
