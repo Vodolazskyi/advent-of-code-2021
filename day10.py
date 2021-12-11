@@ -48,7 +48,7 @@ def score_incomplete_lines(raw: str) -> int:
                 score *= 5
                 score += CHAR_COMPLETED_POINTS[CHAR_PAIRS[char]]
             points.append(score)
-    median_index = round(len(points) / 2)
+    median_index = len(points) // 2
     return sorted(points)[median_index]
 
 
