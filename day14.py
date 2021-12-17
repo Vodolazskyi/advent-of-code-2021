@@ -1,4 +1,4 @@
-from collections import Counter, defaultdict
+from collections import defaultdict
 
 
 RAW = """NNCB
@@ -38,17 +38,28 @@ class Polymer:
         return Polymer(template, insertion_rules)
 
     def step(self) -> None:
-        new_pairs = defaultdict()
+        new_pairs = defaultdict(int)
         for pair, count in self.template.items():
             new_pairs[pair[0] + self.insertion_rules[pair]] += count
             new_pairs[self.insertion_rules[pair] + pair[1]] += count
-        for pair, count in new_pairs.items():
-            self.template[pair] += count
+        self.template = new_pairs
 
     def score(self) -> int:
-        counter = Counter(self.template)
-        counts = counter.most_common()
-        return counts[0][-1] - counts[-1][-1]
+        counter = defaultdict(int)
+        for pair, count in self.template.items():
+            for letter in pair:
+                counter[letter] += count
+        most_common = (
+            max(counter.values()) + 1
+            if max(counter.values()) % 2
+            else max(counter.values())
+        )
+        least_common = (
+            min(counter.values()) + 1
+            if min(counter.values()) % 2
+            else min(counter.values())
+        )
+        return most_common // 2 - least_common // 2
 
 
 pol = Polymer.parse(RAW)
